@@ -1,0 +1,60 @@
+package com.example.app;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.File;
+
+public class PlayerSetupActivity extends AppCompatActivity {
+
+    private EditText etPlayerName;
+    private Button btnStartGame;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        File file = new File(getFilesDir(), "player.dat");
+        if (file.exists())
+        {
+            PlayerDataManager.loadPlayer(this, "Default");
+            openMainGame();
+            finish();
+            return;
+        }
+
+        setContentView(R.layout.activity_player_setup);
+
+        etPlayerName = findViewById(R.id.etPlayerName);
+        btnStartGame = findViewById(R.id.btnStartGame);
+
+        btnStartGame.setOnClickListener(v -> {
+            String name = etPlayerName.getText().toString().trim();
+            if (name.isEmpty())
+            {
+                Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Player.getInstance(name);
+            openMainGame();
+            finish();
+        });
+    }
+
+    private void openMainGame() {
+        Intent i = new Intent(this, GardenActivity.class); // your main game screen
+        startActivity(i);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        PlayerDataManager.savePlayer(this);
+    }
+}
