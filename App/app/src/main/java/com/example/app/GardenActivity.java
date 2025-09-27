@@ -26,6 +26,5 @@ public class GardenActivity extends AppCompatActivity {
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(i);
         });
-
     }
 }
