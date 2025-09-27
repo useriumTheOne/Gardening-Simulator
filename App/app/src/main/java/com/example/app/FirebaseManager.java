@@ -5,42 +5,47 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CountDownLatch;
 
 public class FirebaseManager {
 
-    // Single instance of Firestore
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    private FirebaseManager() {}
-    public static CompletableFuture<List<Crop>> getCrops() {
-        CompletableFuture<List<Crop>> future = new CompletableFuture<>();
+    public static List<Crop> getCrops() {
+        List<Crop> crops = new ArrayList<>();
+        CountDownLatch latch = new CountDownLatch(1);
 
         db.collection("crops")
                 .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    List<Crop> crops = new ArrayList<>();
-                    for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                .addOnSuccessListener(querySnapshot -> {
+                    for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
                         Crop crop = doc.toObject(Crop.class);
-                        if (crop != null) {
-                            crops.add(crop);
-                        }
+                        if (crop != null) crops.add(crop);
                     }
-                    future.complete(crops);
+                    latch.countDown();
                 })
-                .addOnFailureListener(future::completeExceptionally);
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                    latch.countDown();
+                });
 
-        return future;
+        try {
+            latch.await(); // wait until Firebase responds
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return crops;
     }
 
-    public static CompletableFuture<Void> addCrop(Crop crop) {
-        CompletableFuture<Void> future = new CompletableFuture<>();
-
+    public static void addCrop(Crop crop) {
+        if (crop == null) return;
         db.collection("crops")
                 .add(crop)
-                .addOnSuccessListener(documentReference -> future.complete(null))
-                .addOnFailureListener(future::completeExceptionally);
-
-        return future;
+                .addOnSuccessListener(documentReference ->
+                        System.out.println("Crop added: " + crop.getType()))
+                .addOnFailureListener(e -> {
+                    e.printStackTrace();
+                });
     }
 }
