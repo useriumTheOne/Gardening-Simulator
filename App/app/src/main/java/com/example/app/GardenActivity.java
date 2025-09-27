@@ -3,7 +3,11 @@ package com.example.app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
@@ -26,5 +30,9 @@ public class GardenActivity extends AppCompatActivity {
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(i);
         });
+
+        RecyclerView rvGarden = findViewById(R.id.rvGarden);
+        rvGarden.setLayoutManager(new GridLayoutManager(this, 5));
+        rvGarden.setAdapter(new GardenAdapter(Player.getInstance().getGarden(), Player.getInstance()));
     }
 }

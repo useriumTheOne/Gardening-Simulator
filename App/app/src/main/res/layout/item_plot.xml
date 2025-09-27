@@ -1,0 +1,27 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:layout_margin="4dp"
+    android:background="#A0522D"
+    android:padding="4dp">
+
+    <TextView
+        android:id="@+id/tvPlot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:background="#8B4513"/>
+
+    <ProgressBar
+        android:id="@+id/progressGrowth"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_gravity="bottom"
+        android:progress="0"
+        android:max="100"
+        android:visibility="gone"/>
+</FrameLayout>
