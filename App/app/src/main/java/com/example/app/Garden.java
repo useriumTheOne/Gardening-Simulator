@@ -1,6 +1,8 @@
 package com.example.app;
 
-public class Garden {
+import java.io.Serializable;
+
+public class Garden  implements Serializable {
 
     private static final int ROWS = 5;
     private static final int COLS = 5;

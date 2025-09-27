@@ -1,6 +1,8 @@
 package com.example.app;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player  implements Serializable {
 
     // Singleton instance
     private static Player instance;
@@ -28,6 +30,10 @@ public class Player {
             throw new IllegalStateException("Player not initialized yet. Call getInstance(name) first.");
         }
         return instance;
+    }
+    public static void setInstanceFromLoad(Player loadedPlayer)
+    {
+        instance = loadedPlayer;
     }
 
     public String getName() { return name; }

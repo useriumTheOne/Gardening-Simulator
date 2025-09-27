@@ -1,11 +1,12 @@
 package com.example.app;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Inventory {
+public class Inventory  implements Serializable {
 
     private Map<Item, Integer> items;
 

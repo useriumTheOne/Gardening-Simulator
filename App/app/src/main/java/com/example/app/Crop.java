@@ -1,5 +1,8 @@
 package com.example.app;
-public class Crop {
+
+import java.io.Serializable;
+
+public class Crop implements Serializable {
     private String type;
     private double buyPrice;
     private double sellPrice;

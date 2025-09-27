@@ -1,6 +1,8 @@
 package com.example.app;
 
-public class PlantedCrop {
+import java.io.Serializable;
+
+public class PlantedCrop  implements Serializable {
     private Crop crop;
     private long plantedAt;
     public PlantedCrop(Crop crop) {
