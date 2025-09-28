@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
-        <receiver android:name=".NotificationReceiver" />
+        <receiver android:name=".NotificationHelper$NotificationReceiver" />
         <activity
             android:name=".PlayerSetupActivity"
             android:exported="true">
