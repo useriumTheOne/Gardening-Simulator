@@ -114,6 +114,13 @@ public class GardenAdapter extends RecyclerView.Adapter<GardenAdapter.PlotViewHo
                                 "Planted " + selectedSeed.getCrop().getType(),
                                 Toast.LENGTH_SHORT).show();
                         PlayerDataManager.savePlayer(context);
+                        long delayMillis = (long) (selectedSeed.getCrop().getGrowthTime() * 1000);
+                        NotificationHelper.scheduleNotification(
+                                context,
+                                selectedSeed.getCrop().getType(),
+                                delayMillis,
+                                row * 5 + col
+                        );
                     } else {
                         Toast.makeText(context,
                                 "Cannot plant seed", Toast.LENGTH_SHORT).show();

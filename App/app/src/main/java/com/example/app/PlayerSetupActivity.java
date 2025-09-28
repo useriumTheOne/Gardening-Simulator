@@ -1,13 +1,19 @@
 package com.example.app;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.io.File;
 import java.util.concurrent.Executors;
@@ -19,10 +25,11 @@ public class PlayerSetupActivity extends AppCompatActivity {
     private EditText etPlayerName;
     private Button btnStartGame;
     private ScheduledExecutorService scheduler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (!checkExactAlarmPermission()) return;
         File file = new File(getFilesDir(), "player.dat");
         if (file.exists())
         {
@@ -51,6 +58,18 @@ public class PlayerSetupActivity extends AppCompatActivity {
             openMainGame();
             finish();
         });
+    }
+    private boolean checkExactAlarmPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (!getSystemService(android.app.AlarmManager.class).canScheduleExactAlarms()) {
+                Toast.makeText(this, "You must allow exact alarms to use this app", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                startActivity(intent);
+                finish();
+                return false;
+            }
+        }
+        return true;
     }
     private void startFirebaseUpdater() {
         scheduler = Executors.newSingleThreadScheduledExecutor();
