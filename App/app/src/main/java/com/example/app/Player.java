@@ -41,13 +41,16 @@ public class Player  implements Serializable {
     public Inventory getInventory() { return inventory; }
     public Garden getGarden() { return garden; }
 
-    public void addMoney(double amount) {
+    public void addMoney(double amount)
+    {
         money += amount;
+        PlayerInfoFragment.updateUI();
     }
 
     public boolean spendMoney(double amount) {
         if (money >= amount) {
             money -= amount;
+            PlayerInfoFragment.updateUI();
             return true;
         }
         return false;

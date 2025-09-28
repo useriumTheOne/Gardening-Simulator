@@ -10,12 +10,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class PlayerSetupActivity extends AppCompatActivity {
 
     private EditText etPlayerName;
     private Button btnStartGame;
-
+    private ScheduledExecutorService scheduler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +27,7 @@ public class PlayerSetupActivity extends AppCompatActivity {
         if (file.exists())
         {
             PlayerDataManager.loadPlayer(this, "Default");
+            startFirebaseUpdater();
             openMainGame();
             finish();
             return;
@@ -43,9 +47,18 @@ public class PlayerSetupActivity extends AppCompatActivity {
             }
 
             Player.getInstance(name);
+            startFirebaseUpdater();
             openMainGame();
             finish();
         });
+    }
+    private void startFirebaseUpdater() {
+        scheduler = Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate(() -> {
+            Player player = Player.getInstance();
+            User user = new User(player.getName(), player.getMoney());
+            FirebaseManager.updateUser(user);
+        }, 0, 5, TimeUnit.SECONDS);
     }
 
     private void openMainGame() {
@@ -57,6 +70,9 @@ public class PlayerSetupActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         PlayerDataManager.savePlayer(this);
+        if (scheduler != null && !scheduler.isShutdown()) {
+            scheduler.shutdown();
+        }
     }
     @Override
     protected void onResume() {

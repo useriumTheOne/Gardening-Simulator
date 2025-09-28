@@ -9,10 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlayerInfoFragment extends Fragment {
 
     private TextView tvPlayerName, tvPlayerMoney;
-    private static PlayerInfoFragment instance;
+    private static List<PlayerInfoFragment> instances = new ArrayList<PlayerInfoFragment>();;
 
     @Nullable
     @Override
@@ -21,11 +24,10 @@ public class PlayerInfoFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_player_info, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        instance = this;
+        instances.add(this);
         tvPlayerName = view.findViewById(R.id.tvPlayerName);
         tvPlayerMoney = view.findViewById(R.id.tvPlayerMoney);
     }
@@ -37,14 +39,17 @@ public class PlayerInfoFragment extends Fragment {
     }
 
     public void refreshPlayerInfo() {
+        if (tvPlayerName == null || tvPlayerMoney == null) return;
         Player player = Player.getInstance();
         tvPlayerName.setText("Name: " + player.getName());
         tvPlayerMoney.setText("Money: $" + player.getMoney());
     }
     public static void updateUI()
     {
-        if (instance != null) {
+        for (PlayerInfoFragment  instance : instances)
+        {
             instance.refreshPlayerInfo();
         }
+
     }
 }

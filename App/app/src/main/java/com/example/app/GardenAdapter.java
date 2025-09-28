@@ -26,8 +26,6 @@ public class GardenAdapter extends RecyclerView.Adapter<GardenAdapter.PlotViewHo
     public GardenAdapter(Garden garden, Player player) {
         this.garden = garden;
         this.player = player;
-
-        // Start live update
         handler.post(updateRunnable);
     }
 
@@ -74,7 +72,6 @@ public class GardenAdapter extends RecyclerView.Adapter<GardenAdapter.PlotViewHo
             if (pc == null) {
                 showSeedSelection(holder.itemView.getContext(), row, col);
             } else if (pc.isGrown()) {
-                // Harvest
                 if (player.harvestCrop(row, col)) {
                     notifyItemChanged(position);
                     PlayerInfoFragment.updateUI();
