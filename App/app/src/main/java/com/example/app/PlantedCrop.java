@@ -12,8 +12,11 @@ public class PlantedCrop  implements Serializable {
 
     public Crop getCrop() { return crop; }
 
-    public long getElapsedSeconds() {
-        return (System.currentTimeMillis() - plantedAt) / 1000;
+    public long getElapsedSeconds()
+    {
+
+        long e = (System.currentTimeMillis() - plantedAt)/ 1000;
+        return e;
     }
 
     public boolean isGrown() {
