@@ -22,7 +22,7 @@ public class NotificationHelper {
         createNotificationChannel();
     }
 
-    // Call this function to schedule a notification
+    // notify makes a notification
     public void notify(String title, int delaySeconds) {
         Intent intent = new Intent(context, NotificationReceiver.class);
         intent.putExtra("title", title);

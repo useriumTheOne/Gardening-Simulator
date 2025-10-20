@@ -13,7 +13,8 @@ public class FirebaseManager {
 
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public static List<Crop> getCrops() {
+    public static List<Crop> getCrops()
+    {
         List<Crop> crops = new ArrayList<>();
         CountDownLatch latch = new CountDownLatch(1);
 
@@ -32,16 +33,21 @@ public class FirebaseManager {
                 });
 
         try {
-            latch.await(); // wait until Firebase responds
-        } catch (InterruptedException e) {
+            latch.await(); // to wait for the firebase
+        } catch (InterruptedException e)
+        {
             e.printStackTrace();
         }
 
         return crops;
     }
 
-    public static void addCrop(Crop crop) {
-        if (crop == null) return;
+    public static void addCrop(Crop crop)
+    {
+        if (crop == null)
+        {
+            return;
+        }
         db.collection("crops")
                 .add(crop)
                 .addOnSuccessListener(documentReference ->
@@ -51,7 +57,8 @@ public class FirebaseManager {
                 });
     }
 
-    public static List<User> getUsers() {
+    public static List<User> getUsers()
+    {
         List<User> users = new ArrayList<>();
         CountDownLatch latch = new CountDownLatch(1);
 
@@ -71,7 +78,7 @@ public class FirebaseManager {
                 });
 
         try {
-            latch.await(); // wait for Firebase
+            latch.await(); // waiting for Firebase
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -79,8 +86,12 @@ public class FirebaseManager {
         return users;
     }
 
-    public static void updateUser(User user) {
-        if (user == null || user.getName() == null) return;
+    public static void updateUser(User user)
+    {
+        if (user == null || user.getName() == null)
+        {
+            return;
+        }
         DocumentReference docRef = db.collection("users").document(user.getName());
         docRef.get().addOnSuccessListener(snapshot -> {
             if (snapshot.exists()) {

@@ -1,5 +1,6 @@
 package com.example.app;
 
+import android.app.Activity;
 import android.content.Context;
 import java.io.*;
 
@@ -17,6 +18,17 @@ public class PlayerDataManager {
             e.printStackTrace();
         }
     }
+    public static void deletePlayer(Context context) {
+        File file = new File(context.getFilesDir(), FILE_NAME);
+        if (file.exists()) {
+            file.delete();
+        }
+        if (context instanceof Activity) {
+            ((Activity) context).finishAffinity();
+        }
+        System.exit(0);
+    }
+
 
     public static void loadPlayer(Context context, String defaultName) {
         File file = new File(context.getFilesDir(), FILE_NAME);

@@ -8,7 +8,7 @@ public class Crop implements Serializable {
     private double sellPrice;
     private double growthTime;
 
-    public Crop() {} // no-args constructor
+    public Crop() {}
 
     public Crop(String type, double buyPrice, double sellPrice, double growthTime) {
         this.type = type;

@@ -13,14 +13,23 @@
         android:layout_height="wrap_content"
         android:text="Name: ---"
         android:textSize="18sp"
-        android:layout_marginEnd="70dp"
         android:textStyle="bold" />
 
     <TextView
+        android:gravity="center"
         android:id="@+id/tvPlayerMoney"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Money: $0"
         android:textSize="18sp"
+        android:layout_weight="1"
+        android:layout_marginEnd="15dp"
         android:textStyle="bold" />
+
+    <Button
+        android:backgroundTint="#CE0000"
+        android:id="@+id/btnLogoff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log Off" />
 </LinearLayout>

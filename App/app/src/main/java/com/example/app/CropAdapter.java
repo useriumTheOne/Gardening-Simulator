@@ -16,20 +16,23 @@ public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder
 
     private final List<Crop> crops;
 
-    public CropAdapter(List<Crop> crops) {
+    public CropAdapter(List<Crop> crops)
+    {
         this.crops = crops;
     }
 
     @NonNull
     @Override
-    public CropViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CropViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_crop, parent, false);
         return new CropViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CropViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CropViewHolder holder, int position)
+    {
         Crop crop = crops.get(position);
         holder.tvType.setText(crop.getType());
         holder.tvBuy.setText("Buy: " + crop.getBuyPrice());
@@ -57,14 +60,17 @@ public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return crops.size();
     }
 
-    static class CropViewHolder extends RecyclerView.ViewHolder {
+    static class CropViewHolder extends RecyclerView.ViewHolder
+    {
         TextView tvType, tvBuy, tvSell, tvTime;
         Button btnBuy;
-        public CropViewHolder(@NonNull View itemView) {
+        public CropViewHolder(@NonNull View itemView)
+        {
             super(itemView);
             tvType = itemView.findViewById(R.id.tvCropType);
             tvBuy = itemView.findViewById(R.id.tvBuyPrice);

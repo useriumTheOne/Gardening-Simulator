@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +16,7 @@ import java.util.List;
 public class PlayerInfoFragment extends Fragment {
 
     private TextView tvPlayerName, tvPlayerMoney;
+    private Button btn;
     private static List<PlayerInfoFragment> instances = new ArrayList<PlayerInfoFragment>();;
 
     @Nullable
@@ -30,6 +32,10 @@ public class PlayerInfoFragment extends Fragment {
         instances.add(this);
         tvPlayerName = view.findViewById(R.id.tvPlayerName);
         tvPlayerMoney = view.findViewById(R.id.tvPlayerMoney);
+        btn = view.findViewById(R.id.btnLogoff);
+        btn.setOnClickListener(View -> {
+            PlayerDataManager.deletePlayer(view.getContext());
+        });
     }
 
     @Override

@@ -8,7 +8,6 @@ public class User {
         this.money = 0;
     }
 
-    // Constructor with values
     public User(String name, double money) {
         this.name = name;
         this.money = money;
