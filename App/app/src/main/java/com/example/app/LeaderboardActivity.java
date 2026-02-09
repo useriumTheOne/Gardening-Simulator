@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +18,7 @@ public class LeaderboardActivity extends AppCompatActivity {
     private RecyclerView rvLeaderboard;
     private LeaderboardAdapter adapter;
     private List<User> leaderboardList = new ArrayList<User>();
-
+    private TextView aiTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +28,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         rvLeaderboard.setLayoutManager(new LinearLayoutManager(this));
         adapter = new LeaderboardAdapter(leaderboardList);
         rvLeaderboard.setAdapter(adapter);
-
+        aiTextView = findViewById(R.id.aiBadText);
         Button btnGarden = findViewById(R.id.btnGarden);
         Button btnShop = findViewById(R.id.btnShop);
 
@@ -47,6 +49,19 @@ public class LeaderboardActivity extends AppCompatActivity {
                 leaderboardList.clear();
                 leaderboardList.addAll(users);
                 adapter.notifyDataSetChanged();
+            });
+        }).start();
+        new Thread(() -> {
+            GeminiManager.generateMessage("generate a 1 sentence of why ai is bad, be creative", new GeminiManager.GeminiResultListener() {
+                @Override
+                public void onSuccess(String response) {
+                    runOnUiThread(() -> aiTextView.setText(response));
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    runOnUiThread(() -> aiTextView.setText("Error: " + t.getMessage()));
+                }
             });
         }).start();
     }
