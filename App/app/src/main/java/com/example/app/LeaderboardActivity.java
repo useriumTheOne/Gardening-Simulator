@@ -52,7 +52,7 @@ public class LeaderboardActivity extends AppCompatActivity {
             });
         }).start();
         new Thread(() -> {
-            GeminiManager.generateMessage("generate a 1 sentence of why ai is bad, be creative", new GeminiManager.GeminiResultListener() {
+            GeminiManager.generateMessage("generate a 1 sentence of why ai is bad, be creative. start with the word AI", new GeminiManager.GeminiResultListener() {
                 @Override
                 public void onSuccess(String response) {
                     runOnUiThread(() -> aiTextView.setText(response));

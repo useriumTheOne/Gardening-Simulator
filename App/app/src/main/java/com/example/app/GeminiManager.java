@@ -16,7 +16,7 @@ public class GeminiManager {
     private static final String API_KEY = BuildConfig.API_KEY;
 
     public static void generateMessage(String prompt, GeminiResultListener listener) {
-        GenerativeModel gm = new GenerativeModel("gemini-1.5-flash-latest", API_KEY);        GenerativeModelFutures model = GenerativeModelFutures.from(gm);
+        GenerativeModel gm = new GenerativeModel("gemini-2.5-flash", API_KEY);        GenerativeModelFutures model = GenerativeModelFutures.from(gm);
 
         Content content = new Content.Builder().addText(prompt).build();
 
