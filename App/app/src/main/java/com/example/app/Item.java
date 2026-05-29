@@ -19,7 +19,6 @@ public class Item  implements Serializable {
     public double getBuyPrice() { return buyPrice; }
     public double getSellPrice() { return sellPrice; }
 
-    @Override
     public boolean equals(Object o)
     {
         if (this == o) return true;
@@ -28,7 +27,6 @@ public class Item  implements Serializable {
         return name.equals(item.name);
     }
 
-    @Override
     public int hashCode() //FOR THE MAP!!!!!
     {
         return Objects.hash(name);
